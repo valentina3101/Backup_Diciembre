@@ -1,0 +1,17 @@
+html {
+	margin: 0;
+	padding: 0;
+	}
+body { 
+    text-align: center;
+	font: 200% Times New Roman, sans-serif;
+	line-height:1.5; /**establece la distancia entre lineas de texto**/
+	color: black;
+	background-color: #FEECCF;
+    margin: 0; 
+	padding: 20;
+	}
+
+
+
+

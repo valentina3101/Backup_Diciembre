@@ -1,0 +1,45 @@
+from constants import *
+from packet import *
+from constants import *
+from network import *
+
+def create_socket():
+	servidor = socket(AF_INET, SOCK_DGRAM)
+	servidor.bind((RECEIVER_IP,RECEIVER_PORT))
+	return servidor
+
+def extract(packet):
+    data=packet.get_data()
+    return data
+
+
+def deliver_data(message):
+	print(message)
+
+
+def rdt_rcv(socket):
+    data=socket.recv(2048)
+    paquete=loads(data)
+    return paquete
+
+
+def close_socket(socket, signal, frame):
+	print ("\rCerrando socket")
+	socket.close()
+	exit(0)
+
+
+if __name__ == "__main__":
+	servidor= create_socket()# Creamos el socket "receiver"
+	
+	# Registramos la senial de salida
+	signal.signal(signal.SIGINT, partial(close_socket, servidor))
+	print ("listo para recibir mensajes..")# Imprimimos el cartel "Listo para recibir mensajes..."
+	
+	# Iteramos indefinidamente
+	while True:
+		packet=rdt_rcv(servidor)# Recibimos un paquete de la red
+		data=extract(packet)# Extraemos los datos
+		deliver_data(data)# Entregamos los datos a la capa de aplicacion
+	close_socket(servidor)
+		
